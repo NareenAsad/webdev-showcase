@@ -65,7 +65,7 @@ export default function SearchPage() {
           <label className="form-label" htmlFor="origin-input">From (Origin Stop)</label>
           <Autocomplete
             id="origin-input"
-            placeholder="e.g. Gajjumata"
+            placeholder="Select starting location..."
             value={originText}
             onChange={(v) => { setOriginText(v); setOriginLoc(null); }}
             onSelect={(loc) => { setOriginLoc(loc); setOriginText(loc.name); }}
@@ -91,7 +91,7 @@ export default function SearchPage() {
           <label className="form-label" htmlFor="destination-input">To (Destination Stop)</label>
           <Autocomplete
             id="destination-input"
-            placeholder="e.g. Thokar Niaz Baig"
+            placeholder="Select destination..."
             value={destinationText}
             onChange={(v) => { setDestinationText(v); setDestLoc(null); }}
             onSelect={(loc) => { setDestLoc(loc); setDestinationText(loc.name); }}
@@ -108,7 +108,7 @@ export default function SearchPage() {
               className={`algo-btn${algorithm === 'bfs' ? ' selected' : ''}`}
               onClick={() => setAlgorithm('bfs')}
             >
-              🔀 Fewest Transfers (BFS)
+              🔀 Fewest Transfers
             </button>
             <button
               type="button"
@@ -116,7 +116,7 @@ export default function SearchPage() {
               className={`algo-btn${algorithm === 'dijkstra' ? ' selected' : ''}`}
               onClick={() => setAlgorithm('dijkstra')}
             >
-              ⚡ Shortest Path (Dijkstra)
+              ⚡ Shortest Path
             </button>
           </div>
         </div>

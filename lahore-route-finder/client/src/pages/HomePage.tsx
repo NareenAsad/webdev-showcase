@@ -74,7 +74,7 @@ export default function HomePage() {
             { icon: '⚡', title: 'Instant Results',    desc: 'BFS-powered fewest-transfer routing gives you answers in milliseconds.' },
             { icon: '🗺️', title: 'Full Network',      desc: 'Covers Metrobus, Orange Line, and Speedo bus routes across the city.' },
             { icon: '🔄', title: 'Multi-leg Journeys', desc: 'Handles transfers seamlessly — get a step-by-step journey plan.' },
-            { icon: '📍', title: 'GPS Lookup',         desc: 'Don\'t know the stop name? Search by coordinates and we find the nearest stop.' },
+            { icon: '📍', title: 'GPS Lookup',         desc: "Don't know the stop name? Search by coordinates and we find the nearest stop." },
             { icon: '🧠', title: 'Smart Algorithms',   desc: 'Choose BFS for fewest transfers, or Dijkstra for the shortest path.' },
             { icon: '🔒', title: 'Admin Panel',        desc: 'Route admins can add and update stops and routes in real time.' },
           ].map(({ icon, title, desc }) => (

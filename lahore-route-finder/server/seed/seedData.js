@@ -207,12 +207,14 @@ async function seed() {
     console.log('Collections cleared.');
 
     // 1. Gather all unique stop names
+    const cleanName = (name) => name.replace(/\s+Station$/i, '').trim();
+
     const allStopNames = new Set();
     
-    metrobusStops.forEach(name => allStopNames.add(name.trim()));
-    orangeLineStops.forEach(name => allStopNames.add(name.trim()));
+    metrobusStops.forEach(name => allStopNames.add(cleanName(name)));
+    orangeLineStops.forEach(name => allStopNames.add(cleanName(name)));
     speedoRoutes.forEach(route => {
-      route.alignment.forEach(name => allStopNames.add(name.trim()));
+      route.alignment.forEach(name => allStopNames.add(cleanName(name)));
     });
 
     const uniqueStopNames = Array.from(allStopNames);
@@ -267,7 +269,7 @@ async function seed() {
       let totalDistance = 0;
 
       for (let i = 0; i < names.length; i++) {
-        const stopName = names[i].trim();
+        const stopName = cleanName(names[i]);
         const stopObj = stopMap[stopName];
         if (!stopObj) {
           console.error(`Stop object not found for name: ${stopName}`);
@@ -276,7 +278,7 @@ async function seed() {
         stopIds.push(stopObj._id);
 
         if (i > 0) {
-          const prevStopName = names[i - 1].trim();
+          const prevStopName = cleanName(names[i - 1]);
           const prevLoc = locationMap[prevStopName];
           const currLoc = locationMap[stopName];
           if (prevLoc && currLoc) {

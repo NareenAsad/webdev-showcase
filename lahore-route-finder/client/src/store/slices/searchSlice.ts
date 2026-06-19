@@ -56,17 +56,49 @@ interface SearchParams {
   algorithm:       'bfs' | 'dijkstra';
 }
 
+import { clientFindRoute } from '../../utils/clientRouteFinder.ts';
+import type { APIRoute, APIStop } from '../../utils/clientGraphBuilder.ts';
+
 export const runSearch = createAsyncThunk(
   'search/run',
   async (params: SearchParams, { rejectWithValue }) => {
-    const res = await fetch(API, {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(params),
-    });
-    const data = await res.json();
-    if (!res.ok) return rejectWithValue(data.msg || 'Search failed');
-    return data as SearchResult;
+    try {
+      const res = await fetch(API, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(params),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        return rejectWithValue(data.msg || 'Search failed');
+      }
+      return (await res.json()) as SearchResult;
+    } catch (error) {
+      console.warn("Network error during search API call. Falling back to offline client routing...", error);
+      try {
+        // Fetch cached routes and stops using GET which is intercepted by service worker
+        const [routesRes, stopsRes] = await Promise.all([
+          fetch('http://localhost:5000/api/routes'),
+          fetch('http://localhost:5000/api/stops')
+        ]);
+        
+        if (!routesRes.ok || !stopsRes.ok) {
+           return rejectWithValue('Offline search failed: Required data is not cached.');
+        }
+
+        const allRoutes = await routesRes.json() as APIRoute[];
+        const allStops = await stopsRes.json() as APIStop[];
+
+        const result = clientFindRoute(params.originName, params.destinationName, allStops, allRoutes);
+        
+        if ('error' in result) {
+           return rejectWithValue(result.error);
+        }
+        return result as SearchResult;
+      } catch (offlineErr) {
+        return rejectWithValue('You are offline and routing data is not cached.');
+      }
+    }
   }
 );
 

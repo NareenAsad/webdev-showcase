@@ -4,6 +4,76 @@ import { useAppSelector } from '../hooks.ts';
 import type { Leg } from '../store/slices/searchSlice.ts';
 import MapView from '../components/MapView.tsx';
 
+interface FareDetails {
+  legFares: { name: string; fare: number; type: 'metrobus' | 'orangeline' | 'speedo' }[];
+  totalFare: number;
+}
+
+function calculateEstimatedFare(legs: Leg[]): FareDetails {
+  const legFares = legs.map((leg) => {
+    const nameLower = leg.routeName.toLowerCase();
+    let fare = 30; // default/fallback
+    let type: 'metrobus' | 'orangeline' | 'speedo' = 'speedo';
+
+    if (nameLower.includes('metrobus')) {
+      fare = 30;
+      type = 'metrobus';
+    } else if (nameLower.includes('orange line') || nameLower.includes('orangeline')) {
+      fare = 40;
+      type = 'orangeline';
+    } else {
+      // Speedo default: PKR 20 base, plus PKR 5 per stop, capped at PKR 80 per leg
+      const stopCount = leg.stops.length;
+      fare = Math.min(20 + stopCount * 5, 80);
+      type = 'speedo';
+    }
+
+    return {
+      name: leg.routeName,
+      fare,
+      type
+    };
+  });
+
+  const totalFare = legFares.reduce((sum, item) => sum + item.fare, 0);
+  return { legFares, totalFare };
+}
+
+function getTransportIcon(routeName: string, size = 18) {
+  const nameLower = routeName.toLowerCase();
+  if (nameLower.includes('orange line') || nameLower.includes('orangeline')) {
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="var(--color-orange)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '0.4rem', marginLeft: '0.4rem' }}>
+        <rect x="4" y="3" width="16" height="14" rx="2" />
+        <path d="M4 11h16" />
+        <path d="M12 3v8" />
+        <path d="M8 17l-3 4" />
+        <path d="M16 17l3 4" />
+      </svg>
+    );
+  } else if (nameLower.includes('metrobus')) {
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '0.4rem', marginLeft: '0.4rem' }}>
+        <rect x="3" y="4" width="18" height="12" rx="2" />
+        <path d="M3 10h18" />
+        <circle cx="7" cy="19" r="2" />
+        <circle cx="17" cy="19" r="2" />
+        <path d="M6 14h2" />
+        <path d="M16 14h2" />
+      </svg>
+    );
+  } else {
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '0.4rem', marginLeft: '0.4rem' }}>
+        <rect x="3" y="4" width="18" height="12" rx="2" />
+        <path d="M3 10h18" />
+        <circle cx="7" cy="19" r="2" />
+        <circle cx="17" cy="19" r="2" />
+      </svg>
+    );
+  }
+}
+
 function LegCard({ leg, index, total }: { leg: Leg; index: number; total: number }) {
   return (
     <div className="leg-item">
@@ -15,8 +85,9 @@ function LegCard({ leg, index, total }: { leg: Leg; index: number; total: number
 
       {/* Card */}
       <div className="leg-card">
-        <div className="leg-route-name">
-          🚌 {leg.routeName}
+        <div className="leg-route-name" style={{ display: 'inline-flex', alignItems: 'center' }}>
+          {getTransportIcon(leg.routeName)}
+          <span>{leg.routeName}</span>
         </div>
 
         <div className="leg-stops">
@@ -32,9 +103,9 @@ function LegCard({ leg, index, total }: { leg: Leg; index: number; total: number
 
           {/* Intermediate stops (collapsed if > 3) */}
           {leg.stops.slice(0, -1).length > 0 && (
-            <details style={{ paddingLeft: '1.5rem', marginTop: '0.25rem' }}>
+            <details style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem', marginTop: '0.25rem' }}>
               <summary style={{ cursor: 'pointer', fontSize: '0.8rem', color: 'var(--color-muted)' }}>
-                {leg.stops.length - 1} intermediate stop{leg.stops.length - 1 > 1 ? 's' : ''}
+                {leg.stops.length - 1} intermediate stops
               </summary>
               <div style={{ marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                 {leg.stops.slice(0, -1).map((s) => (
@@ -100,7 +171,7 @@ export default function ResultPage() {
           <h2>No Results Yet</h2>
           <p>Search for a route to see your journey plan here.</p>
           <button id="result-go-search-btn" className="btn-primary mt-2" onClick={() => navigate('/search')}>
-            Search a Route
+            Search Route
           </button>
         </div>
       </div>
@@ -108,6 +179,7 @@ export default function ResultPage() {
   }
 
   const { origin, destination, legs, transfers, totalStops, algorithm, message } = result;
+  const fareDetails = calculateEstimatedFare(legs);
 
   return (
     <main className="result-page has-results" aria-labelledby="result-heading">
@@ -122,16 +194,16 @@ export default function ResultPage() {
                 {algorithm === 'bfs' ? '🔀 Fewest Transfers' : '⚡ Shortest Path'}
               </span>
               <span className="result-badge">
-                🚌 {legs.length} leg{legs.length !== 1 ? 's' : ''}
+                🚌 {legs.length} legs
               </span>
               {transfers > 0 && (
                 <span className="result-badge">
-                  🔄 {transfers} transfer{transfers > 1 ? 's' : ''}
+                  🔄 {transfers} transfers
                 </span>
               )}
               {totalStops != null && (
                 <span className="result-badge green">
-                  📍 {totalStops} stop{totalStops !== 1 ? 's' : ''}
+                  📍 {totalStops} stops
                 </span>
               )}
             </div>
@@ -159,17 +231,42 @@ export default function ResultPage() {
         </div>
       ) : (
         <div className="result-content-layout">
-          <div className="legs-timeline" aria-label="Journey steps">
-            {legs.map((leg, i) => (
-              <React.Fragment key={`${leg.routeId}-${i}`}>
-                <LegCard leg={leg} index={i} total={legs.length} />
-                {i < legs.length - 1 && (
-                  <div className="transfer-pill" aria-label="Transfer here">
-                    🔄 Transfer at {leg.alight.name}
+          <div>
+            <div className="legs-timeline" aria-label="Journey steps">
+              {legs.map((leg, i) => (
+                <React.Fragment key={`${leg.routeId}-${i}`}>
+                  <LegCard leg={leg} index={i} total={legs.length} />
+                  {i < legs.length - 1 && (
+                    <div className="transfer-pill" aria-label="Transfer here">
+                      🔄 Transfer at {leg.alight.name}
+                    </div>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+
+            {/* Fare Breakdown Card */}
+            <div className="fare-card">
+              <div className="fare-card-title">
+                <span className="icon">💳</span>
+                <span>Fare Estimator Breakdown</span>
+              </div>
+              <div className="fare-list">
+                {fareDetails.legFares.map((f, i) => (
+                  <div key={i} className="fare-item">
+                    <span className="fare-item-name">
+                      {getTransportIcon(f.name, 14)}
+                      {f.name} ({f.type === 'metrobus' ? 'Metrobus Flat Fare' : f.type === 'orangeline' ? 'Orange Line Flat Fare' : 'Speedo Distance Fare'})
+                    </span>
+                    <span className="fare-item-value">PKR {f.fare}</span>
                   </div>
-                )}
-              </React.Fragment>
-            ))}
+                ))}
+              </div>
+              <div className="fare-total">
+                <span className="fare-total-label">Total Estimated Fare</span>
+                <span className="fare-total-value">PKR {fareDetails.totalFare}</span>
+              </div>
+            </div>
           </div>
 
           <div className="map-sidebar">
