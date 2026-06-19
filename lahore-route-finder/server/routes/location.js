@@ -34,10 +34,14 @@ router.post(
   }
 );
 
-// List all (public)
+// List all (public) — supports ?search= for autocomplete
 router.get('/', async (req, res) => {
   try {
-    const locations = await Location.find();
+    const { search } = req.query;
+    const filter = search
+      ? { name: { $regex: search, $options: 'i' } }
+      : {};
+    const locations = await Location.find(filter).limit(20);
     res.json(locations);
   } catch (err) {
     console.error(err);
