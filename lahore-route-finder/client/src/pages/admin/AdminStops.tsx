@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks.ts';
 
-const API = 'http://localhost:5000/api/stops';
-const LOC_API = 'http://localhost:5000/api/locations';
+import { API_BASE } from '../../config.ts';
+
+const API = `${API_BASE}/api/stops`;
+const LOC_API = `${API_BASE}/api/locations`;
 
 interface Stop {
   _id: string;

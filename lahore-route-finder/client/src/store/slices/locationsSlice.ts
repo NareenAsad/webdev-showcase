@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { API_BASE } from '../../config.ts';
 
-const API = 'http://localhost:5000/api/locations';
+const API = `${API_BASE}/api/locations`;
 
 export interface Location {
   _id: string;

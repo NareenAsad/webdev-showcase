@@ -31,7 +31,7 @@ export default defineConfig({
       workbox: {
         runtimeCaching: [
           {
-            urlPattern: /^http:\/\/localhost:5000\/api\/(locations|stops|routes)$/,
+            urlPattern: /\/api\/(locations|stops|routes)$/,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache',

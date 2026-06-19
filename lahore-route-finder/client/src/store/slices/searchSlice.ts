@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { API_BASE } from '../../config.ts';
 
-const API = 'http://localhost:5000/api/route-finder/search';
+const API = `${API_BASE}/api/route-finder/search`;
 
 export interface LegStop {
   stopId: string;
@@ -78,8 +79,8 @@ export const runSearch = createAsyncThunk(
       try {
         // Fetch cached routes and stops using GET which is intercepted by service worker
         const [routesRes, stopsRes] = await Promise.all([
-          fetch('http://localhost:5000/api/routes'),
-          fetch('http://localhost:5000/api/stops')
+          fetch(`${API_BASE}/api/routes`),
+          fetch(`${API_BASE}/api/stops`)
         ]);
         
         if (!routesRes.ok || !stopsRes.ok) {

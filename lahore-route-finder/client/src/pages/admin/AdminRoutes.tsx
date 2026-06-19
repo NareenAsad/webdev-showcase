@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks.ts';
 
-const API = 'http://localhost:5000/api/routes';
-const STOPS_API = 'http://localhost:5000/api/stops';
+import { API_BASE } from '../../config.ts';
+
+const API = `${API_BASE}/api/routes`;
+const STOPS_API = `${API_BASE}/api/stops`;
 
 interface Route {
   _id: string;

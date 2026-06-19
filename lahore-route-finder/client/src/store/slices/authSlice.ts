@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { API_BASE } from '../../config.ts';
 
-const API = 'http://localhost:5000/api/auth';
+const API = `${API_BASE}/api/auth`;
 
 interface User {
   id: string;
