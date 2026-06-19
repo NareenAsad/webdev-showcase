@@ -14,7 +14,13 @@ import routeFinderRouter from './routes/routeFinder.js';
 connectDB();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://safar-saathi-theta.vercel.app',
+    'http://localhost:5173'
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // health check (no auth)
