@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+body {
+  background-color: #1e1b32; /* Dark background to match Hydra design */
+  margin: 0;
+  color: #fff;
+}
+
+/* Glass‑morphic container */
+.glass-morphic {
+  background: rgba(33, 30, 50, 0.5);
+  border-radius: 40px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
