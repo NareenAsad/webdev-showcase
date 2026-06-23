@@ -1,6 +1,8 @@
 # HydraVerse - Immersive VR Services Portal
 
-🔗 **Live Link:** [https://hydra-verse.vercel.app]
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://hydra-verse.vercel.app)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://hydra-verse.vercel.app)
+[![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62B)](https://hydra-verse.vercel.app)
 
 A modern, highly responsive, and premium landing page portal built for **Hydra**, a cutting-edge Virtual Reality development company. The platform showcases VR game development, enterprise simulation services, and technical consulting with a polished, glassmorphic dark-mode design system.
 
@@ -72,54 +74,3 @@ Bundle the project for production deployment:
 ```bash
 npm run build
 ```
-
----
-
-## ☁️ Deployment on Vercel
-
-You can deploy this React + Vite app to Vercel easily using either the Web Dashboard or the Vercel CLI.
-
-### Option 1: Deployment via Vercel Web Dashboard (Recommended)
-
-1. **Push your code to GitHub / GitLab / Bitbucket**:
-   Make sure your local changes are committed and pushed to a remote repository.
-2. **Log into Vercel**:
-   Go to [Vercel](https://vercel.com) and log in with your Git provider.
-3. **Import Project**:
-   - Click **"Add New"** > **"Project"**.
-   - Import your repository (e.g. `HydraVerse`).
-4. **Configure Settings**:
-   - Vercel automatically detects **Vite** as the framework preset.
-   - Leave the build settings as default:
-     - **Build Command:** `npm run build` or `vite build`
-     - **Output Directory:** `dist`
-5. **Deploy**:
-   Click **"Deploy"**. Vercel will build the project and provide you with a live deployment link.
-
-### Option 2: Deployment via Vercel CLI
-
-1. **Install Vercel CLI globally**:
-   ```bash
-   npm install -g vercel
-   ```
-2. **Log in to Vercel in command line**:
-   ```bash
-   vercel login
-   ```
-3. **Run the deployment command** in the project root:
-   ```bash
-   vercel
-   ```
-   Follow the interactive prompts:
-   - *Set up and deploy?* **Yes**
-   - *Which scope?* Select your account.
-   - *Link to existing project?* **No**
-   - *What's your project's name?* `hydra-verse`
-   - *In which directory is your code located?* `./`
-   - *Want to modify settings?* **No** (Vercel auto-configures Vite default settings)
-4. **Production Deploy**:
-   Once the initial preview is deployed, deploy to production:
-   ```bash
-   vercel --prod
-   ```
-
