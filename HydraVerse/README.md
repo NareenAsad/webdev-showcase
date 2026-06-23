@@ -1,6 +1,6 @@
 # HydraVerse - Immersive VR Services Portal
 
-🔗 **Live Link:** [https://hydra-verse.vercel.app/]
+🔗 **Live Link:** [https://hydra-verse.vercel.app]
 
 A modern, highly responsive, and premium landing page portal built for **Hydra**, a cutting-edge Virtual Reality development company. The platform showcases VR game development, enterprise simulation services, and technical consulting with a polished, glassmorphic dark-mode design system.
 
