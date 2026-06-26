@@ -1,0 +1,211 @@
+/* ===========================
+   Sidebar — Instagram DM List
+   =========================== */
+
+.sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* --- Search Bar --- */
+.sidebar__search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 16px;
+  padding: 10px 14px;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.sidebar__search:hover {
+  background: var(--bg-card-hover);
+}
+
+.sidebar__search-icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.sidebar__search-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* --- Label --- */
+.sidebar__label {
+  padding: 16px 20px 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* --- List --- */
+.sidebar__list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 8px;
+}
+
+/* --- Conversation Item --- */
+.convo-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  font-family: var(--font-family);
+  text-align: left;
+}
+
+.convo-item:hover {
+  background: var(--bg-card);
+}
+
+.convo-item--active {
+  background: var(--bg-card);
+}
+
+/* --- Avatar --- */
+.convo-item__avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.convo-item__ring {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 2px;
+  background: var(--border-primary);
+  transition: background var(--transition-normal);
+}
+
+.convo-item--unread .convo-item__ring {
+  background: var(--ig-gradient);
+}
+
+.convo-item__ring-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
+.convo-item--active .convo-item__ring-inner {
+  background: var(--bg-card);
+}
+
+.convo-item__avatar {
+  font-size: 1.4rem;
+}
+
+.convo-item__unread-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3897f0;
+  border: 2px solid var(--bg-primary);
+}
+
+/* --- Content --- */
+.convo-item__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.convo-item__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.convo-item__name {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.convo-item--unread .convo-item__name {
+  font-weight: 700;
+}
+
+.convo-item__time {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.convo-item__preview {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.convo-item--unread .convo-item__preview {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.convo-item__you {
+  color: var(--text-muted);
+}
+
+.convo-item__no-msg {
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .convo-item__content {
+    display: none;
+  }
+
+  .sidebar__search {
+    margin: 8px;
+    padding: 8px;
+    justify-content: center;
+  }
+
+  .sidebar__search-text {
+    display: none;
+  }
+
+  .sidebar__label {
+    display: none;
+  }
+
+  .sidebar__list {
+    padding: 0 4px;
+  }
+
+  .convo-item {
+    justify-content: center;
+    padding: 8px;
+  }
+}

@@ -1,0 +1,99 @@
+/* ===========================
+   MessageBubble — Instagram Style
+   =========================== */
+
+.msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 65%;
+  animation-duration: 0.25s;
+  animation-timing-function: ease;
+  animation-fill-mode: both;
+}
+
+.msg--own {
+  align-self: flex-end;
+  align-items: flex-end;
+  animation-name: slideInRight;
+}
+
+.msg--other {
+  align-self: flex-start;
+  align-items: flex-start;
+  animation-name: slideInLeft;
+}
+
+/* --- Bubble --- */
+.msg__bubble {
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.msg__bubble--own {
+  background: var(--ig-gradient);
+  background-size: 200% 200%;
+  color: #ffffff;
+}
+
+.msg__bubble--other {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.msg__text {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Multi-line bubbles get more rectangular shape */
+.msg__bubble:has(.msg__text:not(:empty)) {
+  border-radius: 22px;
+}
+
+/* --- Meta (time + seen) --- */
+.msg__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 4px 0;
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+}
+
+.msg:hover .msg__meta {
+  opacity: 1;
+}
+
+.msg__time {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.msg__seen {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.msg__seen-icon {
+  width: 11px;
+  height: 11px;
+  color: var(--text-muted);
+}
+
+.msg__seen-icon--seen {
+  color: #3897f0;
+}
+
+.msg__seen-count {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.msg__seen-icon--seen + .msg__seen-count {
+  color: #3897f0;
+}

@@ -1,0 +1,150 @@
+/* ===========================
+   App Shell — Instagram DM Layout
+   =========================== */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+}
+
+.app--logged-in {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.app--logged-out {
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* --- Two-Column Layout --- */
+.app-layout {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+/* --- Sidebar --- */
+.app-sidebar {
+  width: 350px;
+  min-width: 350px;
+  border-right: 1px solid var(--border-primary);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+/* --- Sidebar Header --- */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-primary);
+  min-height: 64px;
+}
+
+.sidebar-header__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-header__avatar {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.sidebar-header__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.sidebar-header__logout {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-header__logout:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+/* --- Chat Area --- */
+.app-chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+/* --- Empty State --- */
+.app-chat__empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  animation: fadeIn 0.5s ease;
+}
+
+.app-chat__empty-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.app-chat__empty-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.app-chat__empty-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  max-width: 280px;
+  text-align: center;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .app-sidebar {
+    width: 72px;
+    min-width: 72px;
+  }
+
+  .sidebar-header__name {
+    display: none;
+  }
+
+  .sidebar-header__logout {
+    display: none;
+  }
+}
