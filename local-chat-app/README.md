@@ -1,22 +1,20 @@
-# ⚡ SyncChat — Serverless Real-Time Messenger
+# SyncChat — Serverless Real-Time Messenger
 
 SyncChat is a serverless, multi-client chat simulation built entirely with **React JS** and **Vite**. It simulates a real-time messaging application across completely different browser windows/tabs using the HTML5 Web Storage API—**without a database, backend, or WebSockets**.
 
-🔗 **Vercel Live Demo:** [syncchat-messenger.vercel.app](https://syncchat-messenger.vercel.app)
-
 ---
 
-## 🚀 Key Features
+## Key Features
 
 *   **HTML5 Storage Sync:** Sends and displays messages instantly across different tabs/windows using the browser's native `storage` event emitter.
-*   **Unique Message Seen Counters:** Tracks how many times and exactly *who* has viewed each message. The status dynamically changes to an eye icon with a numeric count (e.g., `👁️ 2`) and highlights in blue once seen by the recipient.
+*   **Unique Message Seen Counters:** Tracks how many times and exactly *who* has viewed each message. The status dynamically changes to an eye icon next to a numeric count (e.g., eye icon followed by `2`) and highlights in blue once seen by the recipient.
 *   **6 Interactive Profiles:** Sandbox includes 6 ready-made profiles (Alice, Bob, Charlie, Diana, Eve, Frank) with customized accent themes, avatars, and status glows.
 *   **Instagram DM Redesign:** Sleek dark-mode aesthetic with custom sidebar conversation previews, unread badges, gradient bubble message threads, and a clean reactive input field.
 *   **High-End Landing Page:** Premium introductory dashboard with neon blurred backdrop glows, center-aligned feature explanation grids, and smooth transitions.
 
 ---
 
-## 🛠️ How It Works (Technical Implementation)
+## How It Works (Technical Implementation)
 
 ### 1. Real-Time Syncing (No WebSockets)
 To achieve instant delivery across multiple tabs without a backend server:
@@ -59,7 +57,7 @@ To keep the chat shell feeling like a native desktop app:
 
 ---
 
-## 💻 Local Development Setup
+## Local Development Setup
 
 To run SyncChat locally:
 
@@ -78,25 +76,3 @@ To run SyncChat locally:
 4.  Open the local address in two separate browser windows (or one incognito window) to test tab sync:
     *   Window 1: Login as **Alice** and select **Bob**.
     *   Window 2: Login as **Bob** and select **Alice**.
-
----
-
-## 📦 Deploying to Vercel
-
-You can deploy this project to Vercel in seconds:
-
-### Method 1: Using the Vercel CLI
-1.  Install Vercel globally:
-    ```bash
-    npm install -g vercel
-    ```
-2.  Run the deployment command:
-    ```bash
-    vercel
-    ```
-3.  Follow the prompts to link the project and deploy.
-
-### Method 2: Import via GitHub (Recommended)
-1.  Commit and push your project to a GitHub repository.
-2.  Log in to [Vercel](https://vercel.com/) and click **Add New** > **Project**.
-3.  Select your repository and click **Deploy**. Vercel will automatically detect Vite, configure the build commands, and publish a live URL.
