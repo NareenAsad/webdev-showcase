@@ -11,8 +11,6 @@ Explore the active deployment on Vercel: **[users-posts-explorer.vercel.app](htt
 
 ---
 
----
-
 ## 🎨 Visual Design System & Aesthetics
 
 The interface is styled using a custom HSL-tailored warm vintage palette and elegant typography to deliver a premium user experience:
